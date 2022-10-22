@@ -1,0 +1,45 @@
+1) Generate key file
+gpg --gen-key
+
+2) Since secring.gpg is not created in gpg newer versions, use this command to export keys to secring, which will create secring file in
+"C:/Users/Sushobh/.gnupg/secring.gpg"
+gpg --export-secret-keys >~/.gnupg/secring.gpg
+
+IMPORTANT: The export needs to happen everytime you generate a key file.
+
+3) Use this to print 8 digit key Id
+gpg --list-keys --keyid-format SHORT
+
+4) Pick up the 8 digit key Id from pubg
+
+
+5) Publicize the key
+gpg --keyserver keyserver.ubuntu.com --send-keys KEY_HERE
+
+
+6) This is how the root gradle properties should look like,
+No dobule quotes required anywhere
+***********************
+mavenCentralUsername=sushobh
+mavenCentralPassword=YourPassword
+signing.keyId=5C512254
+signing.password=KEY_ID_PASSWORD
+signing.secretKeyRingFile=C:/Users/Sushobh/.gnupg/secring.gpg
+***********************
+7) Make sure gradle.properties is named as gradle.properties and not gradle.properties.txt
+
+8) List keys like this
+gpg --list-keys
+
+
+9) Check the Sonatype host, this is quite crucial. You will get 403 errors if invalid
+SONATYPE_HOST=S01
+
+
+10) Vanntech plugin
+./gradlew publishAllPublicationsToMavenCentral
+./gradlew closeAndReleaseRepository
+
+
+11) Test your library locally
+You can publish to mavenLocal() and test your plugin bro

@@ -1,5 +1,7 @@
+
+
 plugins {
-    kotlin("jvm") version "1.6.10"
+    kotlin("jvm") version "1.7.10"
     java
     id("com.vanniktech.maven.publish").version("0.20.0")
     `java-gradle-plugin`
@@ -7,8 +9,7 @@ plugins {
 }
 
 val kotlinVersion = "1.7.0"
-group = "org.sushobh"
-version = "1.0"
+
 
 repositories {
     mavenCentral()
@@ -23,14 +24,23 @@ dependencies {
 
 gradlePlugin {
     plugins {
-        create("helloPlugin") {
-            id = "org.sushobh.helloplugin"
-            implementationClass = "MethodCallGradlePlugin"
+        create("helloSushobh") {
+            id = "com.sushobh"
+            implementationClass = "com.sushobh.gradle.exampleplugin.MethodCallGradlePlugin"
             displayName = "Sushobh's hello plugin"
         }
     }
 }
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
 
+tasks.withType<JavaCompile> {
+    sourceCompatibility = "1.8"
+    targetCompatibility = "1.8"
+}
 
 tasks.getByName<Test>("test") {
     useJUnitPlatform()
